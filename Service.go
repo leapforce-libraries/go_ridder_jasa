@@ -12,6 +12,7 @@ import (
 )
 
 const (
+	apiName                            string = "Ridder"
 	maxLengthOrganizationEmail         int    = 255
 	maxLengthOrganizationName          int    = 60
 	maxLengthOrganizationPhone         int    = 50
@@ -127,4 +128,20 @@ func (service *Service) removeSpecialCharacters(test *string) *errortools.Error 
 	(*test) = string(re.ReplaceAll([]byte(*test), []byte(".")))
 
 	return errortools.ErrorMessage(message)
+}
+
+func (service *Service) APIName() string {
+	return apiName
+}
+
+func (service *Service) APIKey() string {
+	return service.apiKey
+}
+
+func (service *Service) APICallCount() int64 {
+	return service.httpService.RequestCount()
+}
+
+func (service *Service) APIReset() {
+	service.httpService.ResetRequestCount()
 }
