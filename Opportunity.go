@@ -2,6 +2,7 @@ package ridder_jasa
 
 import (
 	"fmt"
+	"net/http"
 	"strings"
 
 	errortools "github.com/leapforce-libraries/go_errortools"
@@ -45,10 +46,11 @@ func (service *Service) GetOpportunity(ridderID int32) (*Opportunity, *errortool
 	opportunity := Opportunity{}
 
 	requestConfig := go_http.RequestConfig{
+		Method:        http.MethodGet,
 		URL:           service.url(fmt.Sprintf("opportunities?ridderid=%v", ridderID)),
 		ResponseModel: &opportunity,
 	}
-	_, _, e := service.get(&requestConfig)
+	_, _, e := service.httpRequest(&requestConfig)
 
 	return &opportunity, e
 }
@@ -63,11 +65,12 @@ func (service *Service) UpdateOpportunity(opportunity *Opportunity) (*Opportunit
 	opportunityResponse := OpportunityResponse{}
 
 	requestConfig := go_http.RequestConfig{
+		Method:        http.MethodPost,
 		URL:           service.url(fmt.Sprintf("opportunities/%v", opportunity.RidderID)),
 		BodyModel:     opportunity,
 		ResponseModel: &opportunityResponse,
 	}
-	req, res, e := service.post(&requestConfig)
+	req, res, e := service.httpRequest(&requestConfig)
 
 	if ev != nil {
 		ev.SetRequest(req)
@@ -88,11 +91,12 @@ func (service *Service) CreateOpportunity(newOpportunity *Opportunity) (*Opportu
 	opportunityResponse := OpportunityResponse{}
 
 	requestConfig := go_http.RequestConfig{
+		Method:        http.MethodPost,
 		URL:           service.url("opportunities"),
 		BodyModel:     newOpportunity,
 		ResponseModel: &opportunityResponse,
 	}
-	req, res, e := service.post(&requestConfig)
+	req, res, e := service.httpRequest(&requestConfig)
 
 	if ev != nil {
 		ev.SetRequest(req)
@@ -113,10 +117,11 @@ func (service *Service) WorkflowOpportunity(opportunity *Opportunity, workflow W
 	}
 
 	requestConfig := go_http.RequestConfig{
+		Method:    http.MethodPost,
 		URL:       service.url(fmt.Sprintf("opportunities/%v/%s", opportunity.RidderID, workflow)),
 		BodyModel: opportunity,
 	}
-	_, _, e := service.post(&requestConfig)
+	_, _, e := service.httpRequest(&requestConfig)
 
 	return e
 }

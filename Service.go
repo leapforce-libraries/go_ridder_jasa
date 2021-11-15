@@ -69,7 +69,7 @@ func NewService(config ServiceConfig) (*Service, *errortools.Error) {
 	}, nil
 }
 
-func (service *Service) httpRequest(httpMethod string, requestConfig *go_http.RequestConfig) (*http.Request, *http.Response, *errortools.Error) {
+func (service *Service) httpRequest(requestConfig *go_http.RequestConfig) (*http.Request, *http.Response, *errortools.Error) {
 	// add api key header
 	header := http.Header{}
 	header.Set("X-ApiKey", service.apiKey)
@@ -83,7 +83,7 @@ func (service *Service) httpRequest(httpMethod string, requestConfig *go_http.Re
 	errorResponse := ErrorResponse{}
 	(*requestConfig).ErrorModel = &errorResponse
 
-	request, response, e := service.httpService.HTTPRequest(httpMethod, requestConfig)
+	request, response, e := service.httpService.HTTPRequest(requestConfig)
 	if errorResponse.Error != "" {
 		e.SetMessage(errorResponse.Error)
 	}
@@ -93,14 +93,6 @@ func (service *Service) httpRequest(httpMethod string, requestConfig *go_http.Re
 
 func (service *Service) url(path string) string {
 	return fmt.Sprintf("%s/%s", service.apiURL, path)
-}
-
-func (service *Service) get(requestConfig *go_http.RequestConfig) (*http.Request, *http.Response, *errortools.Error) {
-	return service.httpRequest(http.MethodGet, requestConfig)
-}
-
-func (service *Service) post(requestConfig *go_http.RequestConfig) (*http.Request, *http.Response, *errortools.Error) {
-	return service.httpRequest(http.MethodPost, requestConfig)
 }
 
 func (service *Service) truncateString(fieldName string, value *string, maxLength int, errors *[]string) {

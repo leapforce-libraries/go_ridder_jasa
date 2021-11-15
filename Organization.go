@@ -2,6 +2,7 @@ package ridder_jasa
 
 import (
 	"fmt"
+	"net/http"
 	"strings"
 
 	errortools "github.com/leapforce-libraries/go_errortools"
@@ -25,10 +26,11 @@ func (service *Service) GetOrganization(ridderID int32) (*Organization, *errorto
 	organization := Organization{}
 
 	requestConfig := go_http.RequestConfig{
+		Method:        http.MethodGet,
 		URL:           service.url(fmt.Sprintf("organizations?ridderid=%v", ridderID)),
 		ResponseModel: &organization,
 	}
-	_, _, e := service.get(&requestConfig)
+	_, _, e := service.httpRequest(&requestConfig)
 
 	return &organization, e
 }
@@ -43,11 +45,12 @@ func (service *Service) UpdateOrganization(organization *Organization) (*int32, 
 	organizationID := new(int32)
 
 	requestConfig := go_http.RequestConfig{
+		Method:        http.MethodPost,
 		URL:           service.url(fmt.Sprintf("organizations/%v", organization.RidderID)),
 		BodyModel:     organization,
 		ResponseModel: organizationID,
 	}
-	req, res, e := service.post(&requestConfig)
+	req, res, e := service.httpRequest(&requestConfig)
 
 	if ev != nil {
 		ev.SetRequest(req)
@@ -68,11 +71,12 @@ func (service *Service) CreateOrganization(newOrganization *Organization) (*int3
 	organizationID := new(int32)
 
 	requestConfig := go_http.RequestConfig{
+		Method:        http.MethodPost,
 		URL:           service.url("organizations"),
 		BodyModel:     newOrganization,
 		ResponseModel: organizationID,
 	}
-	req, res, e := service.post(&requestConfig)
+	req, res, e := service.httpRequest(&requestConfig)
 
 	if ev != nil {
 		ev.SetRequest(req)

@@ -2,6 +2,7 @@ package ridder_jasa
 
 import (
 	"fmt"
+	"net/http"
 	"strings"
 
 	errortools "github.com/leapforce-libraries/go_errortools"
@@ -28,10 +29,11 @@ func (service *Service) GetContact(ridderID int32) (*Contact, *errortools.Error)
 	contact := Contact{}
 
 	requestConfig := go_http.RequestConfig{
+		Method:        http.MethodGet,
 		URL:           service.url(fmt.Sprintf("contacts?ridderid=%v", ridderID)),
 		ResponseModel: &contact,
 	}
-	_, _, e := service.get(&requestConfig)
+	_, _, e := service.httpRequest(&requestConfig)
 
 	return &contact, e
 }
@@ -46,11 +48,12 @@ func (service *Service) UpdateContact(contact *Contact) (*int32, *errortools.Err
 	contactID := new(int32)
 
 	requestConfig := go_http.RequestConfig{
+		Method:        http.MethodPost,
 		URL:           service.url(fmt.Sprintf("contacts/%v", contact.RidderID)),
 		BodyModel:     contact,
 		ResponseModel: contactID,
 	}
-	req, res, e := service.post(&requestConfig)
+	req, res, e := service.httpRequest(&requestConfig)
 
 	if ev != nil {
 		ev.SetRequest(req)
@@ -71,11 +74,12 @@ func (service *Service) CreateContact(newContact *Contact) (*int32, *errortools.
 	contactID := new(int32)
 
 	requestConfig := go_http.RequestConfig{
+		Method:        http.MethodPost,
 		URL:           service.url("contacts"),
 		BodyModel:     newContact,
 		ResponseModel: contactID,
 	}
-	req, res, e := service.post(&requestConfig)
+	req, res, e := service.httpRequest(&requestConfig)
 
 	if ev != nil {
 		ev.SetRequest(req)
