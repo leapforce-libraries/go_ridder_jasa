@@ -27,7 +27,7 @@ func (service *Service) GetOrganization(ridderID int32) (*Organization, *errorto
 
 	requestConfig := go_http.RequestConfig{
 		Method:        http.MethodGet,
-		URL:           service.url(fmt.Sprintf("organizations?ridderid=%v", ridderID)),
+		Url:           service.url(fmt.Sprintf("organizations?ridderid=%v", ridderID)),
 		ResponseModel: &organization,
 	}
 	_, _, e := service.httpRequest(&requestConfig)
@@ -46,7 +46,7 @@ func (service *Service) UpdateOrganization(organization *Organization) (*int32, 
 
 	requestConfig := go_http.RequestConfig{
 		Method:        http.MethodPost,
-		URL:           service.url(fmt.Sprintf("organizations/%v", organization.RidderID)),
+		Url:           service.url(fmt.Sprintf("organizations/%v", organization.RidderID)),
 		BodyModel:     organization,
 		ResponseModel: organizationID,
 	}
@@ -72,7 +72,7 @@ func (service *Service) CreateOrganization(newOrganization *Organization) (*int3
 
 	requestConfig := go_http.RequestConfig{
 		Method:        http.MethodPost,
-		URL:           service.url("organizations"),
+		Url:           service.url("organizations"),
 		BodyModel:     newOrganization,
 		ResponseModel: organizationID,
 	}

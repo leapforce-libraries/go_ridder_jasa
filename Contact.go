@@ -30,7 +30,7 @@ func (service *Service) GetContact(ridderID int32) (*Contact, *errortools.Error)
 
 	requestConfig := go_http.RequestConfig{
 		Method:        http.MethodGet,
-		URL:           service.url(fmt.Sprintf("contacts?ridderid=%v", ridderID)),
+		Url:           service.url(fmt.Sprintf("contacts?ridderid=%v", ridderID)),
 		ResponseModel: &contact,
 	}
 	_, _, e := service.httpRequest(&requestConfig)
@@ -49,7 +49,7 @@ func (service *Service) UpdateContact(contact *Contact) (*int32, *errortools.Err
 
 	requestConfig := go_http.RequestConfig{
 		Method:        http.MethodPost,
-		URL:           service.url(fmt.Sprintf("contacts/%v", contact.RidderID)),
+		Url:           service.url(fmt.Sprintf("contacts/%v", contact.RidderID)),
 		BodyModel:     contact,
 		ResponseModel: contactID,
 	}
@@ -75,7 +75,7 @@ func (service *Service) CreateContact(newContact *Contact) (*int32, *errortools.
 
 	requestConfig := go_http.RequestConfig{
 		Method:        http.MethodPost,
-		URL:           service.url("contacts"),
+		Url:           service.url("contacts"),
 		BodyModel:     newContact,
 		ResponseModel: contactID,
 	}

@@ -47,7 +47,7 @@ func (service *Service) GetOpportunity(ridderID int32) (*Opportunity, *errortool
 
 	requestConfig := go_http.RequestConfig{
 		Method:        http.MethodGet,
-		URL:           service.url(fmt.Sprintf("opportunities?ridderid=%v", ridderID)),
+		Url:           service.url(fmt.Sprintf("opportunities?ridderid=%v", ridderID)),
 		ResponseModel: &opportunity,
 	}
 	_, _, e := service.httpRequest(&requestConfig)
@@ -66,7 +66,7 @@ func (service *Service) UpdateOpportunity(opportunity *Opportunity) (*Opportunit
 
 	requestConfig := go_http.RequestConfig{
 		Method:        http.MethodPost,
-		URL:           service.url(fmt.Sprintf("opportunities/%v", opportunity.RidderID)),
+		Url:           service.url(fmt.Sprintf("opportunities/%v", opportunity.RidderID)),
 		BodyModel:     opportunity,
 		ResponseModel: &opportunityResponse,
 	}
@@ -92,7 +92,7 @@ func (service *Service) CreateOpportunity(newOpportunity *Opportunity) (*Opportu
 
 	requestConfig := go_http.RequestConfig{
 		Method:        http.MethodPost,
-		URL:           service.url("opportunities"),
+		Url:           service.url("opportunities"),
 		BodyModel:     newOpportunity,
 		ResponseModel: &opportunityResponse,
 	}
@@ -118,7 +118,7 @@ func (service *Service) WorkflowOpportunity(opportunity *Opportunity, workflow W
 
 	requestConfig := go_http.RequestConfig{
 		Method:    http.MethodPost,
-		URL:       service.url(fmt.Sprintf("opportunities/%v/%s", opportunity.RidderID, workflow)),
+		Url:       service.url(fmt.Sprintf("opportunities/%v/%s", opportunity.RidderID, workflow)),
 		BodyModel: opportunity,
 	}
 	_, _, e := service.httpRequest(&requestConfig)
