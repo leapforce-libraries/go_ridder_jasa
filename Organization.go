@@ -16,7 +16,7 @@ type Organization struct {
 	Phone            string  `json:"Phone"`
 	Website          string  `json:"Website"`
 	EmailAddress     string  `json:"EmailAddress"`
-	AccountManager   int32   `json:"AccountManager"`
+	AccountManager   *int32  `json:"AccountManager,omitempty"`
 	BillingAddress   Address `json:"BillingAddress"`
 	ShippingAddress  Address `json:"ShippingAddress"`
 	Expired          bool    `json:"Expired"`

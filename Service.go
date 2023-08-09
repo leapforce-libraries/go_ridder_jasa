@@ -33,8 +33,6 @@ const (
 	DateTimeLayout                     string = "2006-01-02T15:04:05"
 )
 
-// type
-//
 type Service struct {
 	apiUrl      string
 	apiKey      string

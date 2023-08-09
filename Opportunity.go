@@ -31,7 +31,7 @@ type Opportunity struct {
 	OpportunityCreated   *string `json:"OpportunityCreated,omitempty"`
 	ForecastCloseDate    *string `json:"ForecastCloseDate"`
 	ProbabilityOfWinning int32   `json:"ProbabilityOfWinning"`
-	SalesPerson          int32   `json:"SalesPerson"`
+	SalesPerson          *int32  `json:"SalesPerson,omitempty"`
 	ExternalKey          string  `json:"ExternalKey"`
 	Revision             int32   `json:"Revision"`
 }
