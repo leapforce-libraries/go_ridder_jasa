@@ -1,6 +1,6 @@
 module github.com/leapforce-libraries/go_ridder_jasa
 
-go 1.20
+go 1.22
 
 require (
 	github.com/leapforce-libraries/go_errortools v0.0.0-20230306211452-9ccee0cdafe8
